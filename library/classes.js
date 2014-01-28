@@ -51,6 +51,7 @@ var Layer = function(layer){
     width: [[layer frame] width],
     height: [[layer frame] height]
   }
+  this.rect = [[layer frame] GKRect]
 }
 
 Layer.create = function(layers){

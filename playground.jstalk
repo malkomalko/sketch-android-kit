@@ -1,0 +1,7 @@
+// playground (ctrl j)
+
+#import 'library/common.js'
+
+var names = _.pluck(Document.pages, 'name')
+
+console.log(names)

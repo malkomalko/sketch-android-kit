@@ -2,8 +2,8 @@
 
 #import 'library/common.js'
 
-var pages = Document.pages()
+var artboards = Document.artboards()
 
-_.each(pages, function(page){
-  console.log(page.name)
+_.each(artboards, function(artboard){
+  console.log(artboard.groups())
 })

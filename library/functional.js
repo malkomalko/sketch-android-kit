@@ -17,6 +17,10 @@ _.each = function(array, callback){
   _.A(array).forEach(callback)
 }
 
+_.filter = function(array, callback){
+  return _.A(array).filter(callback)
+}
+
 _.isGroup = function(layer){
   var klass = [layer class]
   return klass === MSLayerGroup || klass === MSArtboardGroup

@@ -2,10 +2,11 @@
 
 #import 'library/common.js'
 
+var basePath =  '~/Desktop'
 var artboards = Document.artboards()
 
 _.each(artboards, function(artboard){
   _.each(artboard.groups(), function(group){
-    console.log(group.rect)
+    group.export(basePath)
   })
 })

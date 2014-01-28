@@ -61,8 +61,25 @@ Layer.create = function(layers){
 }
 
 Layer.prototype = {
+  export: function(path, factor){
+    path = path + '/' + this.name + '.png'
+    factor = factor || 1
+    var slice = this.withFactor(factor)
+    [doc saveArtboardOrSlice:slice toFile:path]
+  },
   isGroup: function(){
     return _.isGroup(this.orig)
+  },
+  withFactor: function(factor){
+    var layer = this.orig
+      , copy = [layer duplicate]
+      , frame = [copy frame]
+      , rect = [copy rectByAccountingForStyleSize:[[copy absoluteRect] rect]]
+      , slice = [MSSlice sliceWithRect:rect scale:factor]
+
+    [copy removeFromParent]
+
+    return slice
   }
 }
 

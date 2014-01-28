@@ -6,6 +6,6 @@ var artboards = Document.artboards()
 
 _.each(artboards, function(artboard){
   _.each(artboard.groups(), function(group){
-    console.log(group.name)
+    console.log(group.coords.x)
   })
 })

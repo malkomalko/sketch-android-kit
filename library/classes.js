@@ -44,6 +44,13 @@ var Layer = function(layer){
   this.orig = layer
 
   this.name = [layer name]
+  this.frame = [layer frame]
+  this.coords = {
+    x: [[layer frame] left],
+    y: [[layer frame] top],
+    width: [[layer frame] width],
+    height: [[layer frame] height]
+  }
 }
 
 Layer.create = function(layers){

@@ -2,6 +2,8 @@
 
 #import 'library/common.js'
 
-var names = _.pluck(Document.pages, 'name')
+var pages = Document.pages()
 
-console.log(names)
+_.each(pages, function(page){
+  console.log(page.name)
+})

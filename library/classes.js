@@ -62,6 +62,7 @@ Layer.create = function(layers){
 
 Layer.prototype = {
   export: function(path, factor){
+    path = path.replace(/\/+$/, '')
     path = path + '/' + this.name + '.png'
     factor = factor || 1
     var slice = this.withFactor(factor)

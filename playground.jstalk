@@ -2,7 +2,7 @@
 
 #import 'library/common.js'
 
-var basePath =  '~/Desktop'
+var basePath =  '~/Desktop/'
 var artboards = Document.artboards()
 
 _.each(artboards, function(artboard){

@@ -18,7 +18,6 @@ var Artboard = function(artboard){
   this.orig = artboard
 
   this.name = [artboard name]
-  this.layers = [artboard layers]
 }
 
 Artboard.create = function(artboards){
@@ -29,7 +28,33 @@ Artboard.create = function(artboards){
 
 Artboard.prototype = {
   groups: function(){
-    return _.filter(this.layers, _.isGroup)
+    return _.filter(this.layers(), function(layer){
+      return layer.isGroup()
+    })
+  },
+  layers: function(){
+    var artboard = this.orig
+    return Layer.create([artboard layers])
+  }
+}
+
+/******************************************************************************/
+
+var Layer = function(layer){
+  this.orig = layer
+
+  this.name = [layer name]
+}
+
+Layer.create = function(layers){
+  return _.map(layers, function(layer){
+    return new Layer(layer)
+  })
+}
+
+Layer.prototype = {
+  isGroup: function(){
+    return _.isGroup(this.orig)
   }
 }
 

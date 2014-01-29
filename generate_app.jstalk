@@ -58,7 +58,10 @@ function createLayout(artboard){
   createDir(outputDir)
 
   var outputFile = 'activity_' + _.str.javaId(artboard.name) + '.xml'
-  [template writeToFile:(outputDir + outputFile) atomically:NO]
+
+  var layout = tim(template, { layout: 'match_parent' })
+  layout = [NSString stringWithString:layout]
+  [layout writeToFile:(outputDir + outputFile) atomically:NO]
 }
 
 function createDir(path){

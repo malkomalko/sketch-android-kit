@@ -1,3 +1,4 @@
+#import 'library/tim.js'
 #import 'library/functional.js'
 #import 'library/classes.js'
 

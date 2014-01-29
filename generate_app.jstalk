@@ -53,6 +53,9 @@ function createLayout(artboard){
   var template = [NSString stringWithContentsOfFile:filePath
                                            encoding:NSUTF8StringEncoding
                                               error:null]
+
+  var outputFile = _.str.javaId(artboard.name)
+  var outputDir = BASE_DIR + '/res/layout/activity_' + outputFile + '.xml'
 }
 
 function cleanup(){

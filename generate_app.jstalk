@@ -8,6 +8,7 @@
  */
 
 var BASE_DIR = Document.dir + 'android-app'
+var PLUGIN_PATH = [[[CHPluginsController alloc] init] fullPluginPath]
 
 var Android = {}
 
@@ -43,6 +44,14 @@ function exportGroup(group){
   })
 }
 
+function createLayouts(){
+  _.each(Document.artboards(), createLayout)
+}
+
+function createLayout(artboard){
+  var templatePath = PLUGIN_PATH + '/Plugins/sketch-android-kit/.templates'
+}
+
 function cleanup(){
   [[NSFileManager defaultManager] removeItemAtPath:BASE_DIR error:nil]
 }
@@ -60,6 +69,7 @@ function main(){
 
   cleanup()
   exportGroups()
+  createLayouts()
   finished()
 }
 

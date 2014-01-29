@@ -74,6 +74,13 @@ _.str = {
     if (str == null) str = ''
     return (/^\s*$/).test(str)
   },
+  javaId: function(str){
+    if (str == null) str = ''
+    str = str.toLowerCase()
+    str = _.str.clean(str)
+    str = str.replace(/ /g, '_')
+    return str.replace(/[^a-z0-9_]/g, '')
+  },
   split: function(str, modifier){
     if (str == null) str = ''
     str = str.split(new RegExp('\\s*' + modifier + '\\s*'))[1]

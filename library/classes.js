@@ -67,7 +67,8 @@ Layer.create = function(layers){
 Layer.prototype = {
   export: function(path, factor){
     path = path.replace(/\/+$/, '')
-    path = path + '/' + _.str.split(this.name, '-') + '.png'
+    var fileName = _.str.javaId(_.str.split(this.name, '-'))
+    path = path + '/' + fileName + '.png'
     factor = factor || 1
     var slice = this.withFactor(factor)
     [doc saveArtboardOrSlice:slice toFile:path]

@@ -49,19 +49,24 @@ function createLayouts(){
 }
 
 function createLayout(artboard){
-  var filePath = PLUGIN_PATH + '/Plugins/sketch-android-kit/.templates/layout.xml'
-  var template = [NSString stringWithContentsOfFile:filePath
-                                           encoding:NSUTF8StringEncoding
-                                              error:nil]
-
   var outputDir = BASE_DIR + '/res/layout/'
   createDir(outputDir)
 
   var outputFile = 'activity_' + _.str.javaId(artboard.name) + '.xml'
+  writeTemplate('layout.xml', outputDir + outputFile, { layout: 'match_parent' })
+}
 
-  var layout = tim(template, { layout: 'match_parent' })
+function writeTemplate(tmpl, path, locals){
+  locals = locals || {}
+
+  var filePath = PLUGIN_PATH + '/Plugins/sketch-android-kit/.templates/' + tmpl
+  var template = [NSString stringWithContentsOfFile:filePath
+                                           encoding:NSUTF8StringEncoding
+                                              error:nil]
+
+  var layout = tim(template, locals)
   layout = [NSString stringWithString:layout]
-  [layout writeToFile:(outputDir + outputFile) atomically:NO]
+  [layout writeToFile:path atomically:NO]
 }
 
 function createDir(path){

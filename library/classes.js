@@ -1,6 +1,10 @@
 /******************************************************************************/
 
-var Document = {}
+var Document = {
+  dir: [[doc fileURL] path].split([doc displayName])[0],
+  name: [doc displayName],
+  url: [[doc fileURL] path]
+}
 
 Document.artboards = function(){
   return Artboard.create([doc artboards])

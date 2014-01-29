@@ -4,6 +4,13 @@
 
 var Android = {}
 
+Android.factors = [
+  {name: 'mdpi', factor: 0.75},
+  {name: 'hdpi', factor: 1},
+  {name: 'xhdpi', factor: 1.5},
+  {name: 'xxhdpi', factor: 2}
+]
+
 function alert(msg){
   var app = [NSApplication sharedApplication]
   [app displayDialog:msg withTitle:'Alert!']
@@ -14,7 +21,7 @@ function processArtboard(artboard){
 }
 
 function exportGroup(group){
-  group.export('~/Desktop')
+  group.export(Document.dir)
 }
 
 function main(){

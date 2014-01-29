@@ -7,7 +7,7 @@
  *  -     export
  */
 
-var BASE_DIR = Document.dir + '/android-app'
+var BASE_DIR = Document.dir + 'android-app'
 
 var Android = {}
 
@@ -18,9 +18,10 @@ Android.factors = [
   {name: 'xxhdpi', scale: 2}
 ]
 
-function alert(msg){
+function alert(msg, title){
+  title = title || ''
   var app = [NSApplication sharedApplication]
-  [app displayDialog:msg withTitle:'Alert!']
+  [app displayDialog:msg withTitle:title]
 }
 
 function exportableGroups(groups){
@@ -40,12 +41,24 @@ function exportGroup(group){
   })
 }
 
+function cleanup(){
+  [[NSFileManager defaultManager] removeItemAtPath:BASE_DIR error:nil]
+}
+
+function finished(){
+  alert('Your android application has been generated.\n' +
+        'Location: ' + BASE_DIR, 'Success!')
+}
+
 function main(){
   if ([doc fileURL] === null) {
-    return alert('Please save your document.\nThat is where we export!')
+    var msg = 'Please save your document.\nThat is where we export your app!'
+    return alert(msg, 'Error!')
   }
 
+  cleanup()
   _.each(Document.artboards(), processArtboard)
+  finished()
 }
 
 main()

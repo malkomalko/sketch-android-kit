@@ -37,7 +37,7 @@ function processArtboard(artboard){
 
 function exportGroup(group){
   _.each(Android.factors, function(factor){
-    group.export(BASE_DIR + '/drawable-' + factor.name, factor.scale)
+    group.export(BASE_DIR + '/res/drawable-' + factor.name, factor.scale)
   })
 }
 

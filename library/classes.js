@@ -38,14 +38,15 @@ Artboard.prototype = {
   },
   layers: function(){
     var artboard = this.orig
-    return Layer.create([artboard layers])
+    return Layer.create([artboard layers], artboard)
   }
 }
 
 /******************************************************************************/
 
-var Layer = function(layer){
+var Layer = function(layer, artboard){
   this.orig = layer
+  this.artboard = artboard
 
   this.name = [layer name]
   this.frame = [layer frame]
@@ -58,16 +59,17 @@ var Layer = function(layer){
   this.rect = [[layer frame] GKRect]
 }
 
-Layer.create = function(layers){
+Layer.create = function(layers, artboard){
   return _.map(layers, function(layer){
-    return new Layer(layer)
+    return new Layer(layer, artboard)
   })
 }
 
 Layer.prototype = {
   export: function(path, factor){
     path = path.replace(/\/+$/, '')
-    var fileName = _.str.javaId(_.str.split(this.name, '-'))
+    var artboard = this.artboard
+    var fileName = _.str.javaId([artboard name] + '_' + _.str.split(this.name, '-'))
     path = path + '/' + fileName + '.png'
     factor = factor || 1
     var slice = this.withFactor(factor)

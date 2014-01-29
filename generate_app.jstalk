@@ -53,7 +53,8 @@ function createLayout(artboard){
   createDir(outputDir)
 
   var outputFile = 'activity_' + _.str.javaId(artboard.name) + '.xml'
-  writeTemplate('layout.xml', outputDir + outputFile, { layout: 'match_parent' })
+  var groups = exportableGroups(artboard.groups())
+  writeTemplate('layout.xml', outputDir + outputFile, { groups: groups })
 }
 
 function writeTemplate(tmpl, path, locals){

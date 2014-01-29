@@ -1,5 +1,8 @@
 <RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="{{layout}}"
-  android:layout_height="{{layout}}">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+  {{groups}}
+    <Group x="{{coords.x}}" y="{{coords.y}}" />
+  {{/groups}}
 </RelativeLayout>

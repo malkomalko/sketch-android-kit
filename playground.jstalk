@@ -2,6 +2,11 @@
 
 #import 'library/common.js'
 
+/**
+ * layout modifiers:
+ *  -     export
+ */
+
 var Android = {}
 
 Android.factors = [

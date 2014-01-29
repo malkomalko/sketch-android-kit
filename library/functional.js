@@ -74,6 +74,11 @@ _.str = {
     if (str == null) str = ''
     return (/^\s*$/).test(str)
   },
+  split: function(str, modifier){
+    if (str == null) str = ''
+    str = str.split(new RegExp('\\s*' + modifier + '\\s*'))[1]
+    return _.str.clean(str)
+  },
   startsWith: function(str, starts){
     if (starts === '') return true
     if (str == null || starts == null) return false

@@ -16,8 +16,15 @@ function alert(msg){
   [app displayDialog:msg withTitle:'Alert!']
 }
 
+function exportableGroups(groups){
+  return _.filter(groups, function(group){
+    var cleanName = _.str.clean(group.name)
+    return _.str.startsWith(cleanName, '-')
+  })
+}
+
 function processArtboard(artboard){
-  _.each(artboard.groups(), exportGroup)
+  _.each(exportableGroups(artboard.groups()), exportGroup)
 }
 
 function exportGroup(group){

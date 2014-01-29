@@ -47,9 +47,17 @@ _.pluck = function(array, selector){
 }
 
 _.str = {
+  camelize: function(str){
+    return _.str.trim(str).replace(/[-_\s]+(.)?/g, function(match, c){
+      return c ? c.toUpperCase() : ''
+    })
+  },
   capitalize : function(str){
     str = str == null ? '' : String(str)
     return str.charAt(0).toUpperCase() + str.slice(1)
+  },
+  classify: function(str){
+    return _.str.titleize(String(str).replace(/[\W_]/g, ' ')).replace(/\s/g, '')
   },
   clean: function(str){
     return _.str.trim(str).replace(/\s+/g, ' ')
@@ -92,6 +100,11 @@ _.str = {
     str = String(str)
     starts = String(starts)
     return str.length >= starts.length && str.slice(0, starts.length) === starts
+  },
+  titleize: function(str){
+    if (str == null) return ''
+    str = String(str).toLowerCase()
+    return str.replace(/(?:^|\s|-)\S/g, function(c){ return c.toUpperCase() })
   },
   trim: function(str, characters){
     if (str == null) return ''

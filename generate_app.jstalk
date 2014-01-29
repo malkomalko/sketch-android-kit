@@ -24,15 +24,17 @@ function alert(msg, title){
   [app displayDialog:msg withTitle:title]
 }
 
+function exportGroups(){
+  _.each(Document.artboards(), function(artboard){
+    _.each(exportableGroups(artboard.groups()), exportGroup)
+  })
+}
+
 function exportableGroups(groups){
   return _.filter(groups, function(group){
     var cleanName = _.str.clean(group.name)
     return _.str.startsWith(cleanName, '-')
   })
-}
-
-function processArtboard(artboard){
-  _.each(exportableGroups(artboard.groups()), exportGroup)
 }
 
 function exportGroup(group){
@@ -57,7 +59,7 @@ function main(){
   }
 
   cleanup()
-  _.each(Document.artboards(), processArtboard)
+  exportGroups()
   finished()
 }
 

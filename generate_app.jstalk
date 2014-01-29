@@ -49,7 +49,10 @@ function createLayouts(){
 }
 
 function createLayout(artboard){
-  var templatePath = PLUGIN_PATH + '/Plugins/sketch-android-kit/.templates'
+  var filePath = PLUGIN_PATH + '/Plugins/sketch-android-kit/.templates/layout.xml'
+  var template = [NSString stringWithContentsOfFile:filePath
+                                           encoding:NSUTF8StringEncoding
+                                              error:null]
 }
 
 function cleanup(){

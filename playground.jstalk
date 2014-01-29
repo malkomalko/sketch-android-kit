@@ -2,11 +2,27 @@
 
 #import 'library/common.js'
 
-var basePath =  '~/Desktop/'
-var artboards = Document.artboards()
+var Android = {}
 
-_.each(artboards, function(artboard){
-  _.each(artboard.groups(), function(group){
-    group.export(basePath)
-  })
-})
+function alert(msg){
+  var app = [NSApplication sharedApplication]
+  [app displayDialog:msg withTitle:'Alert!']
+}
+
+function processArtboard(artboard){
+  _.each(artboard.groups(), exportGroup)
+}
+
+function exportGroup(group){
+  group.export('~/Desktop')
+}
+
+function main(){
+  if ([doc fileURL] === null) {
+    return alert('Please save your document.\nThat is where we export!')
+  }
+
+  _.each(Document.artboards(), processArtboard)
+}
+
+main()

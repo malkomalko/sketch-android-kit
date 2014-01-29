@@ -33,6 +33,10 @@ _.filter = function(array, callback){
   return _.A(array).filter(callback)
 }
 
+_.first = function(array){
+  return _.A(array)[0]
+}
+
 _.isGroup = function(layer){
   var klass = [layer class]
   return klass === MSLayerGroup || klass === MSArtboardGroup
@@ -116,7 +120,5 @@ _.str = {
 }
 
 function prop(selector){
-  return function(e){
-    return [e performSelector:selector]
-  }
+  return function(e){ return e[selector] }
 }

@@ -5,10 +5,10 @@
 var Android = {}
 
 Android.factors = [
-  {name: 'mdpi', factor: 0.75},
-  {name: 'hdpi', factor: 1},
-  {name: 'xhdpi', factor: 1.5},
-  {name: 'xxhdpi', factor: 2}
+  {name: 'mdpi', scale: 0.75},
+  {name: 'hdpi', scale: 1},
+  {name: 'xhdpi', scale: 1.5},
+  {name: 'xxhdpi', scale: 2}
 ]
 
 function alert(msg){
@@ -21,7 +21,9 @@ function processArtboard(artboard){
 }
 
 function exportGroup(group){
-  group.export(Document.dir)
+  _.each(Android.factors, function(factor){
+    group.export(Document.dir + '/drawable-' + factor.name, factor.scale)
+  })
 }
 
 function main(){

@@ -89,12 +89,34 @@ function finished(){
         'Location: ' + BASE_DIR, 'Success!')
 }
 
+function setDPI(){
+  var accessory = [[NSComboBox alloc] initWithFrame:NSMakeRect(0,0,200,25)]
+  [accessory addItemsWithObjectValues:[
+    "0.75 (120dpi)",
+    "1 (160dpi)",
+    "1.5 (240dpi)",
+    "2 (320dpi)"
+  ]]
+  [accessory selectItemAtIndex:1]
+
+  var alert = [[NSAlert alloc] init]
+  [alert setMessageText:"Pixel Density"]
+  [alert setInformativeText:"Please select the device pixel density"]
+  [alert setAccessoryView:accessory]
+  [alert runModal]
+
+  var selection = [accessory indexOfSelectedItem]
+  var dpis = [0.75, 1, 1.5, 2]
+  dpi = dpis[selection]
+}
+
 function main(){
   if ([doc fileURL] === null) {
     var msg = 'Please save your document.\nThat is where we export your app!'
     return alert(msg, 'Error!')
   }
 
+  setDPI()
   cleanup()
   exportGroups()
   createLayouts()

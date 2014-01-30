@@ -74,8 +74,8 @@ var Layer = function(layer, artboard){
   this.name = [layer name]
   this.frame = [layer frame]
   this.coords = {
-    x: [[layer frame] left],
-    y: [[layer frame] top],
+    x: [[layer frame] left] / dpi,
+    y: [[layer frame] top] / dpi,
     width: [[layer frame] width],
     height: [[layer frame] height]
   }

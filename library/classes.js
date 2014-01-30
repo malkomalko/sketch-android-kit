@@ -64,9 +64,12 @@ Artboard.prototype = {
 /******************************************************************************/
 
 var Layer = function(layer, artboard){
+  var artboardOrig = artboard.orig
   this.orig = layer
   this.id = [layer hash]
   this.artboard = artboard
+  this.androidId = _.str.javaId([artboardOrig name] + '_' +
+                                _.str.split([layer name], '-'))
 
   this.name = [layer name]
   this.frame = [layer frame]
@@ -89,10 +92,8 @@ Layer.prototype = {
   export: function(path, factor){
     path = path.replace(/\/+$/, '')
     var artboard = this.artboard
-      , artboardOrig = artboard.orig
     artboard.hideOtherLayers(this.orig)
-    var fileName = _.str.javaId([artboardOrig name] + '_' + _.str.split(this.name, '-'))
-    path = path + '/' + fileName + '.png'
+    path = path + '/' + this.androidId + '.png'
     factor = factor || 1
     var slice = this.withFactor(factor)
     [doc saveArtboardOrSlice:slice toFile:path]

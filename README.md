@@ -3,7 +3,10 @@ sketch-android-kit
 
 Sketch.app Plugin for Exporting Android Layouts
 
-**WIP: nothing much to see here at the moment**
+**Current Progress:**
+
+* http://quick.as/wzx8c0mp - introduction
+* http://quick.as/x4zxhkyj - passing data to generated templates
 
 ### installation / linking (non app store)
 

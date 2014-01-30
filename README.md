@@ -7,6 +7,7 @@ Sketch.app Plugin for Exporting Android Layouts
 
 * http://quick.as/wzx8c0mp - introduction
 * http://quick.as/x4zxhkyj - passing data to generated templates
+* http://quick.as/lw0di0mm - pixel density and generating layouts with images
 
 ### installation / linking (non app store)
 

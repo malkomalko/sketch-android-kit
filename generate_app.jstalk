@@ -54,7 +54,9 @@ function createLayout(artboard){
 
   var outputFile = 'activity_' + _.str.javaId(artboard.name) + '.xml'
   var groups = exportableGroups(artboard.groups())
-  writeTemplate('layout.xml', outputDir + outputFile, { groups: groups })
+  writeTemplate('layout.xml', outputDir + outputFile, {
+    groups: groups.reverse()
+  })
 }
 
 function writeTemplate(tmpl, path, locals){

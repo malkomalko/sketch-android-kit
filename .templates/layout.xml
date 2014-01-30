@@ -10,6 +10,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/{{androidId}}"
     android:src="@drawable/{{androidId}}"
+    android:scaleType="center"
     android:layout_marginLeft="{{coords.x}}dp"
     android:layout_marginTop="{{coords.y}}dp"/>
   {{/groups}}

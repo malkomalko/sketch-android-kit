@@ -18,6 +18,7 @@ function createTransition(layer){
   })
 
   var choice = ui.createMenu('Artboard', _.pluck(artboards, 'name'))
+  if (choice[0] === 1001) { return; }
 }
 
 function main(){

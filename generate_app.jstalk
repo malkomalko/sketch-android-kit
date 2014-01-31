@@ -120,12 +120,20 @@ function setDPI(){
   var alert = [[NSAlert alloc] init]
   [alert setMessageText:'Pixel Density']
   [alert setInformativeText:'Please select the device pixel density']
+  [alert addButtonWithTitle:'OK']
+  [alert addButtonWithTitle:'Cancel']
   [alert setAccessoryView:accessory]
-  [alert runModal]
+  var returnCode = [alert runModal]
+
+  if (returnCode === 1001) {
+    return true
+  }
 
   var choice = [accessory indexOfSelectedItem]
   [defaults setInteger:choice forKey:key]
   dpi = [0.75, 1, 1.5, 2][choice]
+
+  return false
 }
 
 function main(){
@@ -141,7 +149,9 @@ function main(){
     return ui.alert(msg, 'Error!')
   }
 
-  setDPI()
+  var cancelled = setDPI()
+  if (cancelled) return;
+
   cleanup()
   exportGroups(numberOfGroups)
   createLayouts()

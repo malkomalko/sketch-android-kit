@@ -3,6 +3,11 @@
 #import 'library/common.js'
 
 function main(){
+  if ([selection count] !== 1) {
+    var msg = 'Please choose exactly one exportable group first.'
+    return ui.alert(msg, 'Error!')
+  }
+
   var menu = ui.createMenu('Android Kit', [
     'Create Transition'
   ])

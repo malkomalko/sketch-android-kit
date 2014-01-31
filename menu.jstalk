@@ -6,12 +6,18 @@ var menuHandlers = [
   createTransition
 ]
 
-function handleSelection(selection){
-  menuHandlers[selection]()
+function handleSelection(choice, layer){
+  menuHandlers[choice](layer)
 }
 
-function createTransition(){
-  console.log('hello from create transition')
+function createTransition(layer){
+  var currentArtboard = [layer parentArtboard]
+
+  var artboards = _.filter(Document.artboards(), function(artboard){
+    return artboard.name !== [currentArtboard name]
+  })
+
+  var choice = ui.createMenu('Artboard', _.pluck(artboards, 'name'))
 }
 
 function main(){
@@ -28,7 +34,7 @@ function main(){
     return;
   }
 
-  handleSelection(choice[1])
+  handleSelection(choice[1], selection[0])
 }
 
 main()

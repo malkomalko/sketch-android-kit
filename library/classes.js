@@ -68,12 +68,7 @@ Artboard.prototype = {
       , artboardOrig = this.orig
 
     _.each([artboardOrig layers], function(layer){
-      var klass = [layer class]
-        , isGroup = klass === MSLayerGroup
-        , cleanName = _.str.clean([layer name])
-        , isExportable = _.str.startsWith(cleanName, '-')
-
-      if (isGroup && isExportable) number++
+      if (Layer.isExportable(layer)) number++
     })
 
     return number
@@ -111,6 +106,15 @@ Layer.create = function(layers, artboard){
   return _.map(layers, function(layer){
     return new Layer(layer, artboard)
   })
+}
+
+Layer.isExportable = function(layer){
+  var klass = [layer class]
+    , isGroup = klass === MSLayerGroup
+    , cleanName = _.str.clean([layer name])
+    , isExportable = _.str.startsWith(cleanName, '-')
+
+  return isGroup && isExportable
 }
 
 Layer.prototype = {

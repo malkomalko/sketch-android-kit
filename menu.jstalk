@@ -3,7 +3,7 @@
 #import 'library/common.js'
 
 function main(){
-  if ([selection count] !== 1) {
+  if ([selection count] !== 1 || !Layer.isExportable(selection[0])) {
     var msg = 'Please choose exactly one exportable group first.'
     return ui.alert(msg, 'Error!')
   }

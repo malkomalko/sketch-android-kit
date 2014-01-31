@@ -19,12 +19,6 @@ Android.factors = [
   {name: 'xxhdpi', scale: 2}
 ]
 
-function alert(msg, title){
-  title = title || ''
-  var app = [NSApplication sharedApplication]
-  [app displayDialog:msg withTitle:title]
-}
-
 function progress(num){
   progress = [CHProgressSheet runForWindow:Document.window
                                 withObject:'exporting assets']
@@ -100,8 +94,8 @@ function cleanup(){
 }
 
 function finished(){
-  alert('Your android application has been generated.\n' +
-        'Location: ' + BASE_DIR, 'Success!')
+  ui.alert('Your android application has been generated.\n' +
+           'Location: ' + BASE_DIR, 'Success!')
 }
 
 function setDPI(){
@@ -137,14 +131,14 @@ function setDPI(){
 function main(){
   if ([doc fileURL] === null) {
     var msg = 'Please save your document.\nThat is where we export your app!'
-    return alert(msg, 'Error!')
+    return ui.alert(msg, 'Error!')
   }
 
   var numberOfGroups = Document.numberOfExportableGroups()
 
   if (numberOfGroups < 1) {
     var msg = 'There are no groups to exports.'
-    return alert(msg, 'Error!')
+    return ui.alert(msg, 'Error!')
   }
 
   setDPI()

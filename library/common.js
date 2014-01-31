@@ -10,6 +10,11 @@ var console = {
 }
 
 var ui = {
+  alert: function(msg, title){
+    title = title || ''
+    var app = [NSApplication sharedApplication]
+    [app displayDialog:msg withTitle:title]
+  },
   createMenu: function(message, items){
     var accessory = [[NSComboBox alloc] initWithFrame:NSMakeRect(0,0,200,25)]
     [accessory addItemsWithObjectValues:items]

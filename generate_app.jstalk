@@ -123,9 +123,9 @@ function setDPI(){
   [alert setAccessoryView:accessory]
   [alert runModal]
 
-  var selection = [accessory indexOfSelectedItem]
-  [defaults setInteger:selection forKey:key]
-  dpi = [0.75, 1, 1.5, 2][selection]
+  var choice = [accessory indexOfSelectedItem]
+  [defaults setInteger:choice forKey:key]
+  dpi = [0.75, 1, 1.5, 2][choice]
 }
 
 function main(){

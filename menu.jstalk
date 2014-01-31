@@ -2,15 +2,33 @@
 
 #import 'library/common.js'
 
+var menuHandlers = [
+  createTransition
+]
+
+function handleSelection(selection){
+  menuHandlers[selection]()
+}
+
+function createTransition(){
+  console.log('hello from create transition')
+}
+
 function main(){
   if ([selection count] !== 1 || !Layer.isExportable(selection[0])) {
     var msg = 'Please choose exactly one exportable group first.'
     return ui.alert(msg, 'Error!')
   }
 
-  var menu = ui.createMenu('Android Kit', [
+  var choice = ui.createMenu('Android Kit', [
     'Create Transition'
   ])
+
+  if (choice[0] === 1001) { // cancel
+    return;
+  }
+
+  handleSelection(choice[1])
 }
 
 main()

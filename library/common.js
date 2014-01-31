@@ -22,11 +22,14 @@ var ui = {
 
     var alert = [[NSAlert alloc] init]
     [alert setMessageText:message]
+    [alert addButtonWithTitle:'OK']
+    [alert addButtonWithTitle:'Cancel']
     [alert setAccessoryView:accessory]
-    [alert runModal]
 
+    var responseCode = [alert runModal]
     var selection = [accessory indexOfSelectedItem]
-    return selection
+
+    return [responseCode, selection]
   }
 }
 

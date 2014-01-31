@@ -9,6 +9,7 @@
 
 var BASE_DIR = Document.dir + 'android-app'
 var PLUGIN_PATH = [[[CHPluginsController alloc] init] fullPluginPath]
+var SETTINGS_FILE = Document.dir + '.sketch-android-kit'
 
 var Android = {}
 

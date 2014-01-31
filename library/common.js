@@ -27,9 +27,9 @@ var ui = {
     [alert setAccessoryView:accessory]
 
     var responseCode = [alert runModal]
-    var selection = [accessory indexOfSelectedItem]
+    var sel = [accessory indexOfSelectedItem]
 
-    return [responseCode, selection]
+    return [responseCode, sel]
   }
 }
 

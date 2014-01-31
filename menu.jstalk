@@ -17,8 +17,13 @@ function createTransition(layer){
     return artboard.name !== [currentArtboard name]
   })
 
-  var choice = ui.createMenu('Artboard', _.pluck(artboards, 'name'))
+  var artboardNames = _.pluck(artboards, 'name')
+
+  var choice = ui.createMenu('Artboard', artboardNames)
   if (choice[0] === 1001) { return; }
+
+  var sel = choice[1]
+  var transition = artboardNames[sel]
 }
 
 function main(){

@@ -9,4 +9,20 @@ var console = {
   }
 }
 
+var ui = {
+  createMenu: function(message, items){
+    var accessory = [[NSComboBox alloc] initWithFrame:NSMakeRect(0,0,200,25)]
+    [accessory addItemsWithObjectValues:items]
+    [accessory selectItemAtIndex:0]
+
+    var alert = [[NSAlert alloc] init]
+    [alert setMessageText:message]
+    [alert setAccessoryView:accessory]
+    [alert runModal]
+
+    var selection = [accessory indexOfSelectedItem]
+    return selection
+  }
+}
+
 var noop = function(){}

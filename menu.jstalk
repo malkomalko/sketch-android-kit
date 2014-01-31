@@ -3,7 +3,9 @@
 #import 'library/common.js'
 
 function main(){
-
+  var menu = ui.createMenu('Android Kit', [
+    'Create Transition'
+  ])
 }
 
 main()

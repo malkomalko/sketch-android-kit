@@ -1,0 +1,9 @@
+// menu (ctrl cmd j)
+
+#import 'library/common.js'
+
+function main(){
+
+}
+
+main()

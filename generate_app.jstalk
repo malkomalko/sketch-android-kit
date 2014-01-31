@@ -93,14 +93,14 @@ function finished(){
 
 function setDPI(){
   var defaults = [NSUserDefaults standardUserDefaults]
-  var key = "sketch-android-kit-dpi"
+  var key = 'sketch-android-kit-dpi'
 
   var accessory = [[NSComboBox alloc] initWithFrame:NSMakeRect(0,0,200,25)]
   [accessory addItemsWithObjectValues:[
-    "0.75 (120dpi)",
-    "1 (160dpi)",
-    "1.5 (240dpi)",
-    "2 (320dpi)"
+    '0.75 (120dpi)',
+    '1 (160dpi)',
+    '1.5 (240dpi)',
+    '2 (320dpi)'
   ]]
 
   var dpiKey = [defaults integerForKey:key]
@@ -111,15 +111,14 @@ function setDPI(){
   }
 
   var alert = [[NSAlert alloc] init]
-  [alert setMessageText:"Pixel Density"]
-  [alert setInformativeText:"Please select the device pixel density"]
+  [alert setMessageText:'Pixel Density']
+  [alert setInformativeText:'Please select the device pixel density']
   [alert setAccessoryView:accessory]
   [alert runModal]
 
   var selection = [accessory indexOfSelectedItem]
   [defaults setInteger:selection forKey:key]
-  var dpis = [0.75, 1, 1.5, 2]
-  dpi = dpis[selection]
+  dpi = [0.75, 1, 1.5, 2][selection]
 }
 
 function main(){

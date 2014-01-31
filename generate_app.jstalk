@@ -25,7 +25,14 @@ function alert(msg, title){
   [app displayDialog:msg withTitle:title]
 }
 
-function exportGroups(){
+function progress(num){
+  progress = [CHProgressSheet runForWindow:Document.window
+                                withObject:'exporting assets']
+  [progress setProgressMaximum:num]
+}
+
+function exportGroups(numberOfGroups){
+  progress(numberOfGroups)
   _.each(Document.artboards(), function(artboard){
     _.each(exportableGroups(artboard.groups()), exportGroup)
   })
@@ -39,9 +46,15 @@ function exportableGroups(groups){
 }
 
 function exportGroup(group){
+  [progress incrementProgress]
+
   _.each(Android.factors, function(factor){
     group.export(BASE_DIR + '/res/drawable-' + factor.name, factor.scale)
   })
+
+  if ([progress isMaximum]) {
+    [NSApp endSheet:[progress window] returnCode:0]
+  }
 }
 
 function createLayouts(){
@@ -127,9 +140,16 @@ function main(){
     return alert(msg, 'Error!')
   }
 
+  var numberOfGroups = Document.numberOfExportableGroups()
+
+  if (numberOfGroups < 1) {
+    var msg = 'There are no groups to exports.'
+    return alert(msg, 'Error!')
+  }
+
   setDPI()
   cleanup()
-  exportGroups()
+  exportGroups(numberOfGroups)
   createLayouts()
   finished()
 }

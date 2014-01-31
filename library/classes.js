@@ -10,6 +10,16 @@ Document.artboards = function(){
   return Artboard.create([doc artboards])
 }
 
+Document.numberOfExportableGroups = function(){
+  var number = 0
+
+  _.each(Document.artboards(), function(artboard){
+    number += artboard.numberOfExportableGroups()
+  })
+
+  return number
+}
+
 Document.pages = function(){
   return _.map([doc pages], function(page){
     return new Page(page)
@@ -52,6 +62,21 @@ Artboard.prototype = {
     var artboardOrig = this.orig
     this.cache = Layer.create([artboardOrig layers], this)
     return this.cache
+  },
+  numberOfExportableGroups: function(){
+    var number = 0
+      , artboardOrig = this.orig
+
+    _.each([artboardOrig layers], function(layer){
+      var klass = [layer class]
+        , isGroup = klass === MSLayerGroup
+        , cleanName = _.str.clean([layer name])
+        , isExportable = _.str.startsWith(cleanName, '-')
+
+      if (isGroup && isExportable) number++
+    })
+
+    return number
   },
   showHiddenLayers: function(){
     _.each(this.hiddenLayers, function(layer){

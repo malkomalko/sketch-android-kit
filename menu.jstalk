@@ -5,7 +5,8 @@
 var SETTINGS_FILE = Document.dir + '.sketch-android-kit'
 
 var menuHandlers = [
-  createTransition
+  createTransition,
+  clearTransitions
 ]
 
 function handleSelection(choice, layer){
@@ -27,6 +28,15 @@ function createTransition(layer){
   var sel = choice[1]
   var transition = artboardNames[sel]
   writeTransition(transition, layer)
+}
+
+function clearTransitions(transition, layer){
+  var settings = [NSString stringWithContentsOfFile:SETTINGS_FILE
+                                           encoding:NSUTF8StringEncoding
+                                              error:nil]
+
+  var output = [NSString stringWithString:'{}']
+  [output writeToFile:SETTINGS_FILE atomically:NO]
 }
 
 function writeTransition(transition, layer){
@@ -55,7 +65,8 @@ function main(){
   dpi = 1
 
   var choice = ui.createMenu('Android Kit', [
-    'Create Transition'
+    'Create Transition',
+    'Clear Transitions'
   ])
 
   if (choice[0] === 1001) { // cancel

@@ -20,7 +20,7 @@ function createTransition(layer){
     return artboard.name !== [currentArtboard name]
   })
 
-  var artboardNames = _.pluck(artboards, 'name')
+  var artboardNames = _.pluck(artboards, 'name').sort()
 
   var choice = ui.createMenu('Artboard', artboardNames)
   if (choice[0] === 1001) { return; }

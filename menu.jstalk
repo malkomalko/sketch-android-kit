@@ -44,7 +44,7 @@ function writeTransition(transition, layer){
   artboard = new Artboard(artboard)
   layer = new Layer(layer, artboard)
 
-  settings = loadSettings()
+  var settings = loadSettings()
   settings[layer.androidId] = transition.toString()
   settings = JSON.stringify(settings)
 

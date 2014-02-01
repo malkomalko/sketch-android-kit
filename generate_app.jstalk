@@ -150,6 +150,8 @@ function main(){
     return ui.alert(msg, 'Error!')
   }
 
+  settings = loadSettings()
+
   var cancelled = setDPI()
   if (cancelled) return;
 

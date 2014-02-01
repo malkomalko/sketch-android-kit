@@ -2,6 +2,8 @@
 #import 'library/functional.js'
 #import 'library/classes.js'
 
+var SETTINGS_FILE = Document.dir + '.sketch-android-kit'
+
 var console = {
   log: function(msg){
     var d = +new Date()

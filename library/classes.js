@@ -91,6 +91,10 @@ var Layer = function(layer, artboard){
   this.androidId = _.str.javaId([artboardOrig name] + '_' +
                                 _.str.split([layer name], '-'))
 
+  var transition = settings[this.androidId]
+  this.transition = transition
+  this.hasTransition = transition != null
+
   this.name = [layer name]
   this.frame = [layer frame]
   this.coords = {

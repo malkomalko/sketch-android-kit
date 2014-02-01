@@ -26,6 +26,24 @@ function createTransition(layer){
 
   var sel = choice[1]
   var transition = artboardNames[sel]
+  writeTransition(transition, layer)
+}
+
+function writeTransition(transition, layer){
+  var artboard = [layer parentArtboard]
+  artboard = new Artboard(artboard)
+  layer = new Layer(layer, artboard)
+
+  var settings = [NSString stringWithContentsOfFile:SETTINGS_FILE
+                                           encoding:NSUTF8StringEncoding
+                                              error:nil]
+
+  settings = JSON.parse(settings) || {}
+  settings[layer.androidId] = transition.toString()
+  settings = JSON.stringify(settings)
+
+  var output = [NSString stringWithString:settings]
+  [output writeToFile:SETTINGS_FILE atomically:NO]
 }
 
 function main(){
@@ -33,6 +51,8 @@ function main(){
     var msg = 'Please choose exactly one exportable group first.'
     return ui.alert(msg, 'Error!')
   }
+
+  dpi = 1
 
   var choice = ui.createMenu('Android Kit', [
     'Create Transition'

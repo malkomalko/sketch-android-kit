@@ -33,4 +33,13 @@ var ui = {
   }
 }
 
+var loadSettings = function(){
+  var settings = [NSString stringWithContentsOfFile:SETTINGS_FILE
+                                           encoding:NSUTF8StringEncoding
+                                              error:nil]
+
+  settings = JSON.parse(settings) || {}
+  return settings
+}
+
 var noop = function(){}

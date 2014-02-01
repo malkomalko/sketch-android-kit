@@ -44,11 +44,7 @@ function writeTransition(transition, layer){
   artboard = new Artboard(artboard)
   layer = new Layer(layer, artboard)
 
-  var settings = [NSString stringWithContentsOfFile:SETTINGS_FILE
-                                           encoding:NSUTF8StringEncoding
-                                              error:nil]
-
-  settings = JSON.parse(settings) || {}
+  settings = loadSettings()
   settings[layer.androidId] = transition.toString()
   settings = JSON.stringify(settings)
 

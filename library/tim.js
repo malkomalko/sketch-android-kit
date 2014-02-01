@@ -142,7 +142,6 @@
                 return applyFilter("token", token, data, template);
             });
         */
-        // TODO: all an array to be passed to tim(), so that the template is called for each element in it
         function substitute(template, data){
             var match, tag, token, substituted, startPos, endPos, templateStart, templateEnd, subTemplate, closeToken, closePos, key, loopData, loop;
 

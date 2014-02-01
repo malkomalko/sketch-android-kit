@@ -40,11 +40,12 @@ function clearTransitions(transition, layer){
 }
 
 function writeTransition(transition, layer){
+  settings = loadSettings()
+
   var artboard = [layer parentArtboard]
   artboard = new Artboard(artboard)
   layer = new Layer(layer, artboard)
 
-  var settings = loadSettings()
   settings[layer.androidId] = transition.toString()
   settings = JSON.stringify(settings)
 

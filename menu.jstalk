@@ -14,6 +14,11 @@ function handleSelection(choice, layer){
 }
 
 function createTransition(layer){
+  if (selection === null || [selection count] !== 1 || !Layer.isExportable(selection[0])) {
+    var msg = 'Please choose exactly one exportable group first.'
+    return ui.alert(msg, 'Error!')
+  }
+
   var currentArtboard = [layer parentArtboard]
 
   var artboards = _.filter(Document.artboards(), function(artboard){
@@ -54,11 +59,6 @@ function writeTransition(transition, layer){
 }
 
 function main(){
-  if (selection === null || [selection count] !== 1 || !Layer.isExportable(selection[0])) {
-    var msg = 'Please choose exactly one exportable group first.'
-    return ui.alert(msg, 'Error!')
-  }
-
   dpi = 1
 
   var choice = ui.createMenu('Android Kit', [

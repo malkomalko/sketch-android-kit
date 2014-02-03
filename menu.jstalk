@@ -43,7 +43,7 @@ function clearTransitions(transition, layer){
 }
 
 function writeTransition(transition, layer){
-  var settings = loadSettings()
+  settings = loadSettings()
 
   var artboard = [layer parentArtboard]
   artboard = new Artboard(artboard)

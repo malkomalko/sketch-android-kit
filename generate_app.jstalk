@@ -26,6 +26,41 @@ function progress(num){
   [progress setProgressMaximum:num]
 }
 
+function askForPackageName(){
+  var initial = getString('packageName', 'com.example.app')
+  var package = [doc askForUserInput:'Package name?'
+                        initialValue:initial];
+
+  if (package == null) return false;
+
+  writeString('packageName', package)
+  return true
+}
+
+function askForRootActivity(){
+  var initial = getString('rootActivity', '')
+    , defaultChoice = 0
+    , artboards = Document.artboards()
+    , artboardNames = []
+
+  _.each(artboards, function(artboard, i){
+    artboardNames.push(artboard.name)
+    if (initial.toString() === artboard.name.toString()) {
+      defaultChoice = i
+    }
+  })
+
+  var choice = ui.createMenu('What is the first screen?',
+    artboardNames, defaultChoice)
+  if (choice[0] === 1001) { return false; }
+
+  var sel = choice[1]
+  var activity = artboardNames[sel]
+
+  writeString('rootActivity', activity)
+  return true
+}
+
 function exportGroups(numberOfGroups){
   progress(numberOfGroups)
   _.each(Document.artboards(), function(artboard){
@@ -44,7 +79,7 @@ function exportGroup(group){
   [progress incrementProgress]
 
   _.each(Android.factors, function(factor){
-    group.export(BASE_DIR + '/res/drawable-' + factor.name, factor.scale)
+    group.export(BASE_DIR + '/src/res/drawable-' + factor.name, factor.scale)
   })
 
   if ([progress isMaximum]) {
@@ -52,12 +87,84 @@ function exportGroup(group){
   }
 }
 
+function createApp(){
+  createGradle()
+  createManifest()
+  createActivities()
+  createLayouts()
+}
+
+function createGradle(){
+  var outputDir = BASE_DIR + '/'
+  createDir(outputDir)
+
+  var outputFile = 'build.gradle'
+  writeTemplate(outputFile, outputDir + outputFile, {
+    packageName: getString('packageName')
+  })
+}
+
+function createManifest(){
+  var outputDir = BASE_DIR + '/src/'
+  createDir(outputDir)
+
+  var initial = getString('rootActivity', 'root')
+
+  var activities = _.filter(Document.artboards(), function(artboard){
+    return artboard.name.toString() !== initial
+  })
+
+  var outputFile = 'AndroidManifest.xml'
+  writeTemplate(outputFile, outputDir + outputFile, {
+    packageName: getString('packageName'),
+    rootActivity: _.str.classify(_.str.javaId(getString('rootActivity'))) +
+      'Activity',
+    activities: activities
+  })
+}
+
+function createActivities(){
+  var settings = loadSettings()
+    , transitions = settings.transitions
+    , packageName = getString('packageName', 'com.example.app')
+
+  var outputDir = BASE_DIR + '/src/java/' +
+    packageName.replace(/\./g,'/') + '/activity'
+
+  createDir(outputDir)
+
+  _.each(Document.artboards(), function(artboard){
+    var activityName = artboard.activityName
+      , groups = exportableGroups(artboard.groups())
+
+    var artboardTransitions = transitions[artboard.name] || {}
+      , activityTransitions = []
+
+    for (var key in artboardTransitions) {
+      var transition = artboardTransitions[key]
+      activityTransitions.push({
+        from: _.str.javaId(artboard.name + '_' + key),
+        fromSnakeCase: _.str.camelize(key),
+        to: _.str.classify(_.str.javaId(transition)) + 'Activity'
+      })
+    }
+
+    writeTemplate('activity.java', outputDir + '/' + activityName + '.java', {
+      packageName: packageName,
+      layoutId: artboard.layoutId,
+      activityName: activityName,
+      groups: groups.reverse(),
+      transitions: activityTransitions
+    })
+  })
+}
+
 function createLayouts(){
   _.each(Document.artboards(), createLayout)
 }
 
 function createLayout(artboard){
-  var outputDir = BASE_DIR + '/res/layout/'
+  var outputDir = BASE_DIR + '/src/res/layout/'
   createDir(outputDir)
 
   var outputFile = 'activity_' + _.str.javaId(artboard.name) + '.xml'
@@ -126,15 +233,13 @@ function setDPI(){
   [alert setAccessoryView:accessory]
   var returnCode = [alert runModal]
 
-  if (returnCode === 1001) {
-    return true
-  }
+  if (returnCode === 1001) { return false; }
 
   var choice = [accessory indexOfSelectedItem]
   [defaults setInteger:choice forKey:key]
   dpi = [0.75, 1, 1.5, 2][choice]
 
-  return false
+  return true
 }
 
 function main(){
@@ -150,14 +255,21 @@ function main(){
     return ui.alert(msg, 'Error!')
   }
 
-  settings = loadSettings()
-
-  var cancelled = setDPI()
-  if (cancelled) return;
+  var success = setDPI()
+  if (!success) return;
 
   cleanup()
+
+  var success = askForPackageName()
+  if (!success) return;
+
+  var success = askForRootActivity()
+  if (!success) return;
+
+  settings = loadSettings()
+
   exportGroups(numberOfGroups)
-  createLayouts()
+  createApp()
   finished()
 }
 

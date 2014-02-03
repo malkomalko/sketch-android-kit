@@ -4,6 +4,8 @@
 
 var SETTINGS_FILE = Document.dir + '.sketch-android-kit'
 
+var noop = function(){}
+
 var console = {
   log: function(msg){
     var d = +new Date()
@@ -17,10 +19,12 @@ var ui = {
     var app = [NSApplication sharedApplication]
     [app displayDialog:msg withTitle:title]
   },
-  createMenu: function(message, items){
+  createMenu: function(message, items, selectedItemIndex){
+    selectedItemIndex = selectedItemIndex || 0
+
     var accessory = [[NSComboBox alloc] initWithFrame:NSMakeRect(0,0,200,25)]
     [accessory addItemsWithObjectValues:items]
-    [accessory selectItemAtIndex:0]
+    [accessory selectItemAtIndex:selectedItemIndex]
 
     var alert = [[NSAlert alloc] init]
     [alert setMessageText:message]
@@ -40,8 +44,27 @@ var loadSettings = function(){
                                            encoding:NSUTF8StringEncoding
                                               error:nil]
 
-  settings = JSON.parse(settings) || {}
+  settings = JSON.parse(settings) || {transitions:{}}
   return settings
 }
 
-var noop = function(){}
+var writeSettings = function(settings){
+  settings = JSON.stringify(settings)
+  var output = [NSString stringWithString:settings]
+  [output writeToFile:SETTINGS_FILE atomically:NO]
+}
+
+var getString = function(key, defaultValue){
+  var settings = loadSettings()
+  if (settings[key]) {
+    return settings[key].toString()
+  } else {
+    return defaultValue
+  }
+}
+
+var writeString = function(key, value){
+  var settings = loadSettings()
+  settings[key] = value.toString()
+  writeSettings(settings)
+}

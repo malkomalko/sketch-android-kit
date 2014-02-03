@@ -32,7 +32,12 @@ var Artboard = function(artboard){
   this.orig = artboard
   this.id = [artboard hash]
 
-  this.name = [artboard name]
+  var name = [artboard name]
+
+  this.name = name
+  this.activityName = _.str.classify(_.str.javaId(name)) + 'Activity'
+  this.layoutId = 'activity_' + _.str.javaId(name)
+  this.sanitizedName = _.str.javaId(name)
   this.hiddenLayers = []
 }
 
@@ -88,8 +93,12 @@ var Layer = function(layer, artboard){
   this.orig = layer
   this.id = [layer hash]
   this.artboard = artboard
+
+  var layerNameWithoutDash = _.str.split([layer name], '-')
   this.androidId = _.str.javaId([artboardOrig name] + '_' +
-                                _.str.split([layer name], '-'))
+                                layerNameWithoutDash)
+  this.androidSnakeCase = _.str.camelize(_.str.javaId(layerNameWithoutDash))
+  this.sanitizedName = _.str.javaId(layerNameWithoutDash)
 
   var transition = settings[this.androidId]
   this.transition = transition

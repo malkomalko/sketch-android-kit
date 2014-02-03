@@ -36,26 +36,25 @@ function createTransition(layer){
 }
 
 function clearTransitions(transition, layer){
-  var settings = [NSString stringWithContentsOfFile:SETTINGS_FILE
-                                           encoding:NSUTF8StringEncoding
-                                              error:nil]
+  var settings = loadSettings()
 
-  var output = [NSString stringWithString:'{}']
-  [output writeToFile:SETTINGS_FILE atomically:NO]
+  settings.transitions = {}
+  writeSettings(settings)
 }
 
 function writeTransition(transition, layer){
-  settings = loadSettings()
+  var settings = loadSettings()
 
   var artboard = [layer parentArtboard]
   artboard = new Artboard(artboard)
   layer = new Layer(layer, artboard)
 
-  settings[layer.androidId] = transition.toString()
-  settings = JSON.stringify(settings)
+  settings.transitions[artboard.sanitizedName] =
+    settings.transitions[artboard.sanitizedName] || {}
 
-  var output = [NSString stringWithString:settings]
-  [output writeToFile:SETTINGS_FILE atomically:NO]
+  settings.transitions[artboard.sanitizedName][layer.sanitizedName] =
+    transition.toString()
+  writeSettings(settings)
 }
 
 function main(){

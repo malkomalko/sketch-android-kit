@@ -1,4 +1,4 @@
-/******************************************************************************/
+/*****************************************************************************/
 
 var Document = {
   dir: [[doc fileURL] path].split([doc displayName])[0],
@@ -26,7 +26,7 @@ Document.pages = function(){
   })
 }
 
-/******************************************************************************/
+/*****************************************************************************/
 
 var Artboard = function(artboard){
   this.orig = artboard
@@ -49,9 +49,24 @@ Artboard.create = function(artboards){
 
 Artboard.prototype = {
   groups: function(){
-    return _.filter(this.layers(), function(layer){
-      return layer.isGroup()
-    })
+    var groups = []
+
+    function findGroups(layers){
+      _.each(layers, function(layer){
+        if (layer.isGroup()) {
+          layer.nestedLayers = layer.nestedLayers || []
+          if (layer.nestedLayers.length > 0) {
+            findGroups(layer.nestedLayers)
+          } else {
+            groups.push(layer)
+          }
+        }
+      })
+    }
+
+    findGroups(this.layers())
+
+    return groups
   },
   hideOtherLayers: function(currentLayer){
     var self = this
@@ -86,7 +101,7 @@ Artboard.prototype = {
   }
 }
 
-/******************************************************************************/
+/*****************************************************************************/
 
 var Layer = function(layer, artboard){
   var artboardOrig = artboard.orig
@@ -113,6 +128,15 @@ var Layer = function(layer, artboard){
     height: [[layer frame] height]
   }
   this.rect = [[layer frame] GKRect]
+
+  if (this.isGroup()) {
+    var cleanName = _.str.clean(this.name)
+    this.exportable = _.str.startsWith(cleanName, '-')
+
+    if (!this.exportable) {
+      this.nestedLayers = Layer.create([layer layers], artboard)
+    }
+  }
 }
 
 Layer.create = function(layers, artboard){
@@ -161,7 +185,7 @@ Layer.prototype = {
   }
 }
 
-/******************************************************************************/
+/*****************************************************************************/
 
 var Page = function(page){
   this.orig = page
@@ -179,4 +203,4 @@ Page.prototype = {
   }
 }
 
-/******************************************************************************/
+/*****************************************************************************/

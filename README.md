@@ -3,6 +3,8 @@ sketch-android-kit
 
 Sketch.app Plugin for Exporting Android Layouts
 
+Now works for Sketch Version 3!
+
 **Current Progress:**
 
 * http://quick.as/wzx8cb2m - generate an android app in under 3 minutes
@@ -20,13 +22,3 @@ Everything is generated dynamically at the moment, except for a few version numb
 As always, feel free to fork this and use it to create your own ideas and application skeletons for iOS/web/etc.
 
 Cheers
-
-### installation / linking (non app store)
-
-    cd ~/Library/Application\ Support/sketch/Plugins/
-    git clone https://github.com/malkomalko/sketch-android-kit.git
-    ln -s "`pwd`/sketch-android-kit/library" "`pwd`/library"
-
-### logging
-
-    tail -f /var/log/system.log | awk '/Sketch\[/,/SketchEOL/'

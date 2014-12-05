@@ -29,7 +29,7 @@ function progress(num){
 function askForPackageName(){
   var initial = getString('packageName', 'com.example.app')
   var package = [doc askForUserInput:'Package name?'
-                        initialValue:initial];
+                        initialValue:initial]
 
   if (package == null) return false;
 
@@ -199,8 +199,8 @@ function cleanup(){
 }
 
 function finished(){
-  ui.alert('Your android application has been generated.\n' +
-           'Location: ' + BASE_DIR, 'Success!')
+  var url = NSURL.fileURLWithPath(BASE_DIR)
+  NSWorkspace.sharedWorkspace().openURL(url)
 }
 
 function setDPI(){

@@ -1,4 +1,4 @@
-// generate app (ctrl j)
+// (ctrl j)
 
 #import 'library/common.js'
 
@@ -7,9 +7,9 @@
  *  -     export
  */
 
-var BASE_DIR = Document.dir + 'android-app'
-var PLUGIN_PATH = [[[CHPluginsController alloc] init] fullPluginPath]
-var SETTINGS_FILE = Document.dir + '.sketch-android-kit'
+var PLUGIN_PATH = sketch.scriptPath.split('/').slice(0, -1).join('/')
+var BASE_DIR = PLUGIN_PATH + '/exports/' + Document.name
+                                         + '-' + Document.hashCode
 
 var Android = {}
 
@@ -21,7 +21,7 @@ Android.factors = [
 ]
 
 function progress(num){
-  progress = [CHProgressSheet runForWindow:Document.window
+  progress = [CHProgressSheet runForWindow:doc.window()
                                 withObject:'exporting assets']
   [progress setProgressMaximum:num]
 }
@@ -34,6 +34,7 @@ function askForPackageName(){
   if (package == null) return false;
 
   writeString('packageName', package)
+
   return true
 }
 
@@ -177,28 +178,24 @@ function createLayout(artboard){
 function writeTemplate(tmpl, path, locals){
   locals = locals || {}
 
-  var filePath = PLUGIN_PATH + '/Plugins/sketch-android-kit/.templates/' + tmpl
+  var filePath = PLUGIN_PATH + '/templates/' + tmpl
   var template = [NSString stringWithContentsOfFile:filePath
                                            encoding:NSUTF8StringEncoding
-                                              error:nil]
+                                              error:null]
 
   var layout = tim(template, locals)
   layout = [NSString stringWithString:layout]
-  [layout writeToFile:path atomically:NO]
+  [layout writeToFile:path atomically:false]
 }
 
 function createDir(path){
   var fm = [NSFileManager defaultManager]
-  var dirExists = [fm fileExistsAtPath:path isDirectory:NO]
-
-  if (!dirExists) {
-    [fm createDirectoryAtPath:path withIntermediateDirectories:YES
-                   attributes:nil error:nil]
-  }
+  [fm createDirectoryAtPath:path withIntermediateDirectories:true
+                 attributes:null error:null]
 }
 
 function cleanup(){
-  [[NSFileManager defaultManager] removeItemAtPath:BASE_DIR error:nil]
+  [[NSFileManager defaultManager] removeItemAtPath:BASE_DIR error:null]
 }
 
 function finished(){

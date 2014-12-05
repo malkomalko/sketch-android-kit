@@ -1,8 +1,6 @@
-// menu (ctrl cmd j)
+// (ctrl cmd j)
 
 #import 'library/common.js'
-
-var SETTINGS_FILE = Document.dir + '.sketch-android-kit'
 
 var menuHandlers = [
   createTransition,
@@ -48,12 +46,11 @@ function writeTransition(transition, layer){
   var artboard = [layer parentArtboard]
   artboard = new Artboard(artboard)
   layer = new Layer(layer, artboard)
+  var key = artboard.sanitizedName
 
-  settings.transitions[artboard.sanitizedName] =
-    settings.transitions[artboard.sanitizedName] || {}
-
-  settings.transitions[artboard.sanitizedName][layer.sanitizedName] =
-    transition.toString()
+  var transitionObject = settings.transitions[key] || {}
+  transitionObject[layer.sanitizedName] = transition.toString()
+  settings.transitions[key] = transitionObject
   writeSettings(settings)
 }
 

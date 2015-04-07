@@ -14,10 +14,12 @@ var BASE_DIR = PLUGIN_PATH + '/exports/' + Document.name
 var Android = {}
 
 Android.factors = [
-  {name: 'mdpi', scale: 0.75},
-  {name: 'hdpi', scale: 1},
-  {name: 'xhdpi', scale: 1.5},
-  {name: 'xxhdpi', scale: 2}
+  {name: 'ldpi', scale: 0.375},
+  {name: 'mdpi', scale: 0.5},
+  {name: 'hdpi', scale: 0.75},
+  {name: 'xhdpi', scale: 1.0},
+  {name: 'xxhdpi', scale: 1.5},
+  {name: 'xxxhdpi', scale: 2.0}
 ]
 
 function progress(num){

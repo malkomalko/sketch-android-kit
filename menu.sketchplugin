@@ -1,6 +1,6 @@
 // (ctrl cmd j)
 
-#import 'library/common.js'
+@import 'library/common.js'
 
 var menuHandlers = [
   createTransition,

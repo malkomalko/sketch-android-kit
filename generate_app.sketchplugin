@@ -1,6 +1,6 @@
 // (ctrl j)
 
-#import 'library/common.js'
+@import 'library/common.js'
 
 /**
  * layout modifiers:

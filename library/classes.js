@@ -123,7 +123,7 @@ var Layer = function (layer, artboard) {
     height: this.frame.height()
   };
 
-  this.rect = this.frame.GKRect();
+  this.rect = this.orig.absoluteRect();
 };
 
 Layer.create = function (layers, artboard) {
